@@ -43,10 +43,10 @@ import static io.cucumber.junit.platform.engine.Constants.*;
         key = PLUGIN_PROPERTY_NAME,
         value = "pretty,html:target.cucumber.html"
 )
-/*@ConfigurationParameter(
+@ConfigurationParameter(
         key = FILTER_TAGS_PROPERTY_NAME,
-        value =""
-)*/
+        value ="@shadow"
+)
 public class TestRunner
 {
 
