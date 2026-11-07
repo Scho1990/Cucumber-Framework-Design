@@ -1,6 +1,8 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.SearchContext;
+import org.openqa.selenium.WebElement;
 
 public class ShadowDomPage extends BasePage{
 
@@ -14,18 +16,44 @@ public class ShadowDomPage extends BasePage{
     }
 
     public void enterName(String name){
-        type(NAME_TEXTBOX, name);
+        WebElement userRegistrationHost = visible(By.cssSelector("div user-registration"));
+        SearchContext userRegistrationRoot = userRegistrationHost.getShadowRoot();
+        WebElement registrationFormHost = userRegistrationRoot.findElement(By.cssSelector("div registration-form"));
+        SearchContext registrationFormRoot = registrationFormHost.getShadowRoot();
+        registrationFormRoot.findElement(By.cssSelector("#name")).sendKeys(name);
+       // type(NAME_TEXTBOX, name);
     }
 
     public void enterEmail(String email){
-        type(EMAIL_TEXTBOX, email);
+        WebElement userRegistrationHost = visible(By.cssSelector("div user-registration"));
+        SearchContext userRegistrationRoot = userRegistrationHost.getShadowRoot();
+        WebElement registrationFormHost = userRegistrationRoot.findElement(By.cssSelector("div registration-form"));
+        SearchContext registrationFormRoot = registrationFormHost.getShadowRoot();
+        registrationFormRoot.findElement(By.cssSelector("#email")).sendKeys(email);
+        //type(EMAIL_TEXTBOX, email);
     }
 
     public void clicksOnSubmitButton(){
-        click(SUBMIT_TEXTBOX);
+        WebElement userRegistrationHost = visible(By.cssSelector("div user-registration"));
+        SearchContext userRegistrationRoot = userRegistrationHost.getShadowRoot();
+        WebElement registrationFormHost = userRegistrationRoot.findElement(By.cssSelector("div registration-form"));
+        SearchContext registrationFormRoot = registrationFormHost.getShadowRoot();
+        WebElement formActionsHost = registrationFormRoot.findElement(By.cssSelector("div form-actions"));
+        SearchContext formActionsRoot = formActionsHost.getShadowRoot();
+        WebElement submitComponentHost = formActionsRoot.findElement(By.cssSelector("div submit-component"));
+        SearchContext submitComponentRoot = submitComponentHost.getShadowRoot();
+        submitComponentRoot.findElement(By.cssSelector("#submitButton")).click();
+       // click(SUBMIT_TEXTBOX);
     }
 
     public String getSuccessMessage(){
         return text(SUCCESS_MESSAGE);
+    }
+
+    private SearchContext shadowRootHandling(String shadowHost, String shadowRoot){
+        WebElement userRegistrationHost = visible(By.cssSelector("div user-registration"));
+        SearchContext userRegistrationRoot = userRegistrationHost.getShadowRoot();
+        WebElement registrationFormHost = userRegistrationRoot.findElement(By.cssSelector("div registration-form"));
+        return registrationFormHost.getShadowRoot();
     }
 }
